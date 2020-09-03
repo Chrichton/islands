@@ -5,6 +5,16 @@
 ## creation via 
 mix new islands_engine --sup
 
+## plugins
+vscode-elixir
+https://marketplace.visualstudio.com/items?itemName=mjmcloug.vscode-elixir
+
+Elixir Test 
+https://marketplace.visualstudio.com/items?itemName=samuel-pordeus.elixir-test
+
+ElixirLS
+https://marketplace.visualstudio.com/items?itemName=JakeBecker.elixir-ls
+
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
