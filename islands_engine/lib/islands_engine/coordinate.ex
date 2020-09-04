@@ -7,6 +7,8 @@
 # Visit http://www.pragmaticprogrammer.com/titles/lhelph for more book information.
 #---
 defmodule IslandsEngine.Coordinate do
+  @moduledoc false
+
   alias __MODULE__
 
   @enforce_keys [:row, :col]

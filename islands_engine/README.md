@@ -5,6 +5,9 @@
 ## creation via 
 mix new islands_engine --sup
 
+## Tools
+Credo: https://github.com/rrrene/credo
+
 ## plugins
 vscode-elixir
 https://marketplace.visualstudio.com/items?itemName=mjmcloug.vscode-elixir

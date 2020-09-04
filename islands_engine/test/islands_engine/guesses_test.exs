@@ -1,13 +1,15 @@
 ExUnit.start
 
 defmodule GuessesTest do
+  @moduledoc false
+
   use ExUnit.Case, async: true
 
-  alias IslandsEngine.{ Coordinate, Guesses }
+  alias IslandsEngine.{Coordinate, Guesses}
 
   setup do
-    {:ok, coord1} = Coordinate.new(1,1)
-    {:ok, coord2} = Coordinate.new(2,2)
+    {:ok, coord1} = Coordinate.new(1, 1)
+    {:ok, coord2} = Coordinate.new(2, 2)
     {:ok, [guesses:  Guesses.new,
            coord1: coord1,
            coord2: coord2
@@ -49,10 +51,10 @@ defmodule GuessesTest do
   test "can guess a hit" do
     guesses = Guesses.new()
 
-    {:ok, coord1} = Coordinate.new(8,3)
+    {:ok, coord1} = Coordinate.new(8, 3)
     guesses = Guesses.add(guesses, :hit, coord1)
 
-    {:ok, coord2} = Coordinate.new(7,9)
+    {:ok, coord2} = Coordinate.new(7, 9)
     guesses = Guesses.add(guesses, :hit, coord2)
 
     assert MapSet.size(guesses.hits) == 2
@@ -61,10 +63,10 @@ defmodule GuessesTest do
   test "can guess a miss" do
     guesses = Guesses.new()
 
-    {:ok, coord1} = Coordinate.new(8,3)
+    {:ok, coord1} = Coordinate.new(8, 3)
     guesses = Guesses.add(guesses, :miss, coord1)
 
-    {:ok, coord2} = Coordinate.new(7,9)
+    {:ok, coord2} = Coordinate.new(7, 9)
     guesses = Guesses.add(guesses, :miss, coord2)
 
     # TODO: Can't figure out how to pattern match

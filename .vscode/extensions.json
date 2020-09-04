@@ -1,0 +1,10 @@
+{
+    "recommendations": [
+        "JakeBecker.elixir-ls",
+        "royalmist.vscode-eex-format",
+        "iampeterbanjo.elixirlinter",
+        "ms-vsliveshare.vsliveshare-pack",
+        "vsls-contrib.spaces",
+        "zxh404.vscode-proto3"
+    ]
+}
