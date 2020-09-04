@@ -60,6 +60,7 @@ How can I define:
 def new(%IslandType = type, %Coordinate{} = upper_left) do
 
 Questions:
+why dont all tests run?
 what does the "%" stand for?
   defines type parameters?
 
