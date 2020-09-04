@@ -37,6 +37,9 @@ be found at [https://hexdocs.pm/islands_engine](https://hexdocs.pm/islands_engin
 iex -S mix
 alias IslandsEngine.Coordinate
 alias IslandsEngine.{Coordinate, Guesses}
+r Island => recomplile
+:miss = Island.guess(dot, coordinate) => only works, when guess returns the same type (:miss)
+
 
 ### elixir language
 %IslandsEngine.Coordinate{col: 5, row: 2}
@@ -66,3 +69,7 @@ what does the "%" stand for?
 
 when do I use ":"?
 Linter?
+
+guess isn't a pure function!
+
+
