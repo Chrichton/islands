@@ -71,4 +71,27 @@ defmodule RulesTest do
     assert :islands_set = rules.player1
     assert :islands_set = rules.player2
   end
+
+  test "error paths" do
+    rules = Rules.new()
+
+    # Assert all states following :add_player are invalid
+    assert :error = Rules.check(rules, {:position_islands, :player1})
+    assert :error = Rules.check(rules, {:position_islands, :player2})
+
+    assert :error = Rules.check(rules, {:set_islands, :player1})
+    assert :error = Rules.check(rules, {:set_islands, :player2})
+
+    assert :error = Rules.check(rules, {:guess_coordinate, :player1})
+    assert :error = Rules.check(rules, {:guess_coordinate, :player2})
+
+
+    # Set first state
+    {:ok, rules} = Rules.check(rules, :add_player)
+
+    assert :error = Rules.check(rules, :add_player)
+    assert :error = Rules.check(rules, {:guess_coordinate, :player1})
+    assert :error = Rules.check(rules, {:guess_coordinate, :player2})
+  end
+
 end

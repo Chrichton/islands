@@ -15,6 +15,12 @@ https://marketplace.visualstudio.com/items?itemName=mjmcloug.vscode-elixir
 Elixir Test 
 https://marketplace.visualstudio.com/items?itemName=samuel-pordeus.elixir-test
 
+Jump between Test and Impl: Cmd + Shift + J
+Run all tests on file     : Cmd + Shift + K, F
+Run test at cursor        : Cmd + Shift + K, C
+Run all tests in a folder : Cmd + Shift + K, D
+Run test suite            : Cmd + Shift + K, S
+
 ElixirLS
 https://marketplace.visualstudio.com/items?itemName=JakeBecker.elixir-ls
 
