@@ -50,7 +50,10 @@ alias IslandsEngine.Coordinate
 alias IslandsEngine.{Coordinate, Guesses}
 r Island => recomplile
 :miss = Island.guess(dot, coordinate) => only works, when guess returns the same type (:miss)
-
+state_data = :sys.get_state(game) => gets state from GenServer
+state_data = :sys.replace_state(game, 
+                fn state_data -> %{state_data | rules: %Rules{state: :player1_turn}}
+              end)
 
 ### elixir language
 %IslandsEngine.Coordinate{col: 5, row: 2}
