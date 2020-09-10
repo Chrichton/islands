@@ -30,7 +30,7 @@ defmodule BoardTest do
     refute Board.all_islands_positioned?(b)
   end
 
-  test "position same islands overlap" do
+  test "position same islands can overlap" do
     board = Board.new()
     {:ok, coordinate} = Coordinate.new(1, 1)
     {:ok, island} = Island.new(:atoll, coordinate)
@@ -41,7 +41,7 @@ defmodule BoardTest do
     assert board1 = board2
   end
 
-  test "position different islands overlap" do
+  test "position different islands should not overlap" do
     board = Board.new()
     {:ok, coordinate} = Coordinate.new(1, 1)
     {:ok, island1} = Island.new(:atoll, coordinate)
