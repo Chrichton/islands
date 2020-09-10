@@ -24,6 +24,8 @@ Run test suite            : Cmd + Shift + K, S
 ElixirLS
 https://marketplace.visualstudio.com/items?itemName=JakeBecker.elixir-ls
 
+Enable Format on save: Alt + Shift + F
+
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
