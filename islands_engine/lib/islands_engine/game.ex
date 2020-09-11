@@ -1,7 +1,7 @@
 defmodule IslandsEngine.Game do
   @moduledoc false
 
-  use GenServer, start: {__MODULE__, :start_link, []}, restart: :transient
+  use GenServer
 
   alias IslandsEngine.{Board, Island, Guesses, Rules, Coordinate}
 
