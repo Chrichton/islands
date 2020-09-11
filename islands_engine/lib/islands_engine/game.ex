@@ -1,23 +1,14 @@
 defmodule IslandsEngine.Game do
   @moduledoc false
 
-  use GenServer
+  use GenServer, start: {__MODULE__, :start_link, []}, restart: :transient
 
   alias IslandsEngine.{Board, Island, Guesses, Rules, Coordinate}
 
   @players [:player1, :player2]
 
-  def via_tuple(name) when is_binary(name) and byte_size(name) > 0,
-    do: {:via, Registry, {Registry.Game, name}}
-
-  def start_link(name) when is_binary(name) and byte_size(name) > 0,
-    do: GenServer.start_link(__MODULE__, name, name: via_tuple(name))
-
-  def init(name) do
-    player1 = %{name: name, board: Board.new(), guesses: Guesses.new()}
-    player2 = %{name: nil, board: Board.new(), guesses: Guesses.new()}
-    {:ok, %{player1: player1, player2: player2, rules: Rules.new()}}
-  end
+  # One Day
+  @timeout 60 * 60 * 24 * 1000
 
   def add_player(game, name) when is_binary(name) and byte_size(name) > 0,
     do: GenServer.call(game, {:add_player, name})
@@ -31,6 +22,24 @@ defmodule IslandsEngine.Game do
   def guess_coordinate(game, player, row, col) when player in @players,
     do: GenServer.call(game, {:guess_coordinate, player, row, col})
 
+  # ------- System-Functions
+
+  def start_link(name) when is_binary(name) and byte_size(name) > 0,
+    do: GenServer.start_link(__MODULE__, name, name: via_tuple(name))
+
+  def via_tuple(name) when is_binary(name) and byte_size(name) > 0,
+    do: {:via, Registry, {Registry.Game, name}}
+
+  def init(name) do
+    player1 = %{name: name, board: Board.new(), guesses: Guesses.new()}
+    player2 = %{name: nil, board: Board.new(), guesses: Guesses.new()}
+    {:ok, %{player1: player1, player2: player2, rules: Rules.new()}, @timeout}
+  end
+
+  def handle_info(:timeout, state_data) do
+    {:stop, {:shutdown, :timeout}, state_data}
+  end
+
   # ------- Implementations
 
   def handle_call({:add_player, name}, _from, state_data) do
@@ -41,7 +50,7 @@ defmodule IslandsEngine.Game do
       |> update_rules(rules)
       |> reply_success(:ok)
     else
-      :error -> {:reply, :error, state_data}
+      :error -> reply_error(:error, state_data)
     end
   end
 
@@ -57,10 +66,10 @@ defmodule IslandsEngine.Game do
       |> update_rules(rules)
       |> reply_success(:ok)
     else
-      :error -> {:reply, :error, state_data}
-      {:error, :invalid_coordinate} -> {:reply, {:error, :invalid_coordinate}, state_data}
-      {:error, :invalid_island_type} -> {:reply, {:error, :invalid_island_type}, state_data}
-      {:error, :overlapping_island} -> {:reply, {:error, :overlapping_island}, state_data}
+      :error -> reply_error(:error, state_data)
+      {:error, :invalid_coordinate} -> reply_error({:error, :invalid_coordinate}, state_data)
+      {:error, :invalid_island_type} -> reply_error({:error, :invalid_island_type}, state_data)
+      {:error, :overlapping_island} -> reply_error({:error, :overlapping_island}, state_data)
     end
   end
 
@@ -73,8 +82,8 @@ defmodule IslandsEngine.Game do
       |> update_rules(rules)
       |> reply_success({:ok, board})
     else
-      :error -> {:reply, :error, state_data}
-      false -> {:reply, {:error, :not_all_islands_positioned}, state_data}
+      :error -> reply_error(:error, state_data)
+      false -> reply_error({:error, :not_all_islands_positioned}, state_data)
     end
   end
 
@@ -95,8 +104,8 @@ defmodule IslandsEngine.Game do
       |> update_rules(rules)
       |> reply_success({hit_or_miss, forested_island, win_status})
     else
-      :error -> {:reply, :error, state_data}
-      {:error, :invalid_coordinate} -> {:reply, {:error, :invalid_coordinate}, state_data}
+      :error -> reply_error(:error, state_data)
+      {:error, :invalid_coordinate} -> reply_error({:error, :invalid_coordinate}, state_data)
     end
   end
 
@@ -104,7 +113,9 @@ defmodule IslandsEngine.Game do
 
   defp update_rules(state_data, rules), do: %{state_data | rules: rules}
 
-  defp reply_success(state_data, reply), do: {:reply, reply, state_data}
+  defp reply_success(state_data, reply), do: {:reply, reply, state_data, @timeout}
+
+  defp reply_error(reply, state_data), do: {:reply, reply, state_data, @timeout}
 
   defp player_board(state_data, player), do: Map.get(state_data, player).board
 
