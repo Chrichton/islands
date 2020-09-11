@@ -7,8 +7,10 @@ defmodule IslandsEngine.Game do
 
   @players [:player1, :player2]
 
+  def via_tuple(name), do: {:via, Registry, {Registry.Game, name}}
+
   def start_link(name) when is_binary(name) and byte_size(name) > 0,
-    do: GenServer.start_link(__MODULE__, name, [])
+    do: GenServer.start_link(__MODULE__, name, name: via_tuple(name))
 
   def init(name) do
     player1 = %{name: name, board: Board.new(), guesses: Guesses.new()}
