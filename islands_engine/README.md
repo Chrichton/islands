@@ -76,26 +76,60 @@ compiles
 How can I define: 
 def new(%IslandType = type, %Coordinate{} = upper_left) do
 
-Questions:
-why dont all tests run?
-what does the "%" stand for?
-  defines type parameters?
+### @ defines Compile-Time Constants
+@board_range 1..10
 
-when do I use ":"?
-Linter?
-
-guess isn't a pure function!
-
-@board_range 1..10 => @??
-
+### when = Guards
 def new(row, col)  when row in(@board_range) and col in(@board_range), do:
     {:ok, %Coordinate{row: row, col: col}}
-def new(_row, _col), do: {:error, :invalid_coordinate} => def for row,col !in range?
 
-:ok => Atom
-%
-@
+### pattern matching for the case that row,col !in range?
+def new(_row, _col), do: {:error, :invalid_coordinate}
+
+### : definesAtom
+:ok 
+
+### Tuple
+{a, b}
+
+### Keyword list
+List of tuples, where the first item of the tuple is an atom
+[{:a, 1}, {:b, 2}]
+Syntactic sugar: [a: 1, b: 2]
+
+### % constructs and defines a Map = Dictionary in Swift
+%{:a => 1, 2 => :b}
+
+### a Struct is a "bare" Map
+The keys (atoms) are the members of the Struct
+Example Coordinate: defstruct [:row, :col]
+Syntactic sugar: coordinate.row accesses :row key
+
+### MapSet = Set in Swift
+
+### Good read
 https://elixir-lang.org/getting-started/introduction.html
 
 -> vs. <-
 
+## OTP Registry:
+def via_tuple(name), do: {:via, Registry, {Registry.Game, name}}
+
+via = Game.via_tuple("Lena")
+{:ok, game} = GenServer.start_link(Game, "Lena", name: via)
+
+## OTP Sending and receiving Messages
+iex> self()
+
+iex> send(self(), "Hello World!")
+
+iex> receive do
+...> msg -> "Here's the message: #{msg}" 
+...> after 100 -> "Nothing to see here." 
+...> end
+
+## OTP Fault tolerance
+iex> spawned = spawn(DemoProc, :loop, [])
+iex> Process.alive?(spawned)
+iex> send(spawned, "Hello World!")
+Process.exit(spawned, :kaboom)
