@@ -54,7 +54,8 @@ mix phx.new islands_interface --no-ecto
 iex -S mix
 alias IslandsEngine.Coordinate
 alias IslandsEngine.{Coordinate, Guesses}
-r Island => recomplile
+r Island => recompile
+c "lib/islands_interface_web/channels/game_channel.ex" => compile file
 :miss = Island.guess(dot, coordinate) => only works, when guess returns the same type (:miss)
 state_data = :sys.get_state(game) => gets state from GenServer
 state_data = :sys.replace_state(game, 

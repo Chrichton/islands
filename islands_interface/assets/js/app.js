@@ -13,3 +13,7 @@ import "../css/app.scss"
 //     import socket from "./socket"
 //
 import "phoenix_html"
+
+// registers phoenix for use in browser-console
+import phoenix from 'phoenix'
+window.phoenix = phoenix
