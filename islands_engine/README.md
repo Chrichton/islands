@@ -46,6 +46,9 @@ be found at [https://hexdocs.pm/islands_engine](https://hexdocs.pm/islands_engin
 ### Phoenix 1.5.4
 mix archive.install hex phx_new 1.5.4
 
+mix phx.new islands_interface --no-ecto
+
+
 ## learned
 ### iex
 iex -S mix
