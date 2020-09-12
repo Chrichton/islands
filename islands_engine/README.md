@@ -43,6 +43,9 @@ Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_do
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at [https://hexdocs.pm/islands_engine](https://hexdocs.pm/islands_engine).
 
+### Phoenix 1.5.4
+mix archive.install hex phx_new 1.5.4
+
 ## learned
 ### iex
 iex -S mix
@@ -133,3 +136,14 @@ iex> spawned = spawn(DemoProc, :loop, [])
 iex> Process.alive?(spawned)
 iex> send(spawned, "Hello World!")
 Process.exit(spawned, :kaboom)
+
+## Applications
+
+### Applications are a kind of libraries you can put together
+:application.which_applications
+
+iex -S mix run --no-start
+Application.start(:islands_engine)
+Application.stop(:islands_engine)
+
+:application.ensure_all_started(:islands_engine)
