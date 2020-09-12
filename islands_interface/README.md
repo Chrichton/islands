@@ -23,6 +23,19 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 ### Phoenix 1.5.4
 mix archive.install hex phx_new 1.5.4
 
-### Create Phoenix-App
+### For Alt-Shift-F
+sudo gem install htmlbeautifier
+
+## Create Phoenix-App
 mix phx.new islands_interface --no-ecto
 
+## iex
+:application.which_applications
+
+### start web-server
+iex -S mix phx.server
+alias IslandsEngine.GameSupervisor
+Supervisor.which_children(GameSupervisor)
+
+## Commandline
+mix deps.tree

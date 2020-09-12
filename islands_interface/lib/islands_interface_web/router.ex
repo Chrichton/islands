@@ -14,9 +14,10 @@ defmodule IslandsInterfaceWeb.Router do
   end
 
   scope "/", IslandsInterfaceWeb do
+    # Use the default browser stack
     pipe_through :browser
-
     get "/", PageController, :index
+    post "/test", PageController, :test
   end
 
   # Other scopes may use custom stacks.
