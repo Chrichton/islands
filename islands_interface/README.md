@@ -69,3 +69,7 @@ using the browser-javascript console
 
 var socket = new window.Phoenix.Socket("/socket", {})
 
+------
+
+via = IslandsEngine.Game.via_tuple("moon")
+state_data = :sys.get_state(via)

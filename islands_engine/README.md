@@ -93,7 +93,7 @@ def new(row, col)  when row in(@board_range) and col in(@board_range), do:
 ### pattern matching for the case that row,col !in range?
 def new(_row, _col), do: {:error, :invalid_coordinate}
 
-### : definesAtom
+### : defines Atom
 :ok 
 
 ### Tuple
