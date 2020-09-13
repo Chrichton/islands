@@ -1,3 +1,4 @@
+// ---------  Test Game
 function new_channel(subtopic, screen_name) {
   return socket.channel("game:" + subtopic, { screen_name: screen_name });
 }
@@ -66,13 +67,12 @@ function set_islands(channel, player) {
 }
 
 function guess_coordinate(channel, player, row, col) {
-    var params = { player: player, row: row, col: col };
-    channel.push("guess_coordinate", params)
-      .receive("error", (response) => {
-          console.log("Unable to guess a coordinate: " + player, response);
-      });
-  }
-  
+  var params = { player: player, row: row, col: col };
+  channel.push("guess_coordinate", params).receive("error", (response) => {
+    console.log("Unable to guess a coordinate: " + player, response);
+  });
+}
+
 // --------
 
 // Player1
@@ -89,11 +89,11 @@ game_channel.on("player_set_islands", (response) => {
   console.log("Player Set Islands", response);
 });
 
-game_channel.on("player_guessed_coordinate", response => { 
-    console.log("Player Guessed Coordinate: ", response.result)
+game_channel.on("player_guessed_coordinate", (response) => {
+  console.log("Player Guessed Coordinate: ", response.result);
 });
 
-new_game(game_channel)
+new_game(game_channel);
 
 // --- After Player2 set_islands
 
@@ -106,7 +106,7 @@ position_island(game_channel, "player1", "dot", 1, 1);
 // %{state_data | rules: %IslandsEngine.Rules{state: :player1_turn}}
 // end)
 
-guess_coordinate(game_channel, "player1", 10, 1) // misses
+guess_coordinate(game_channel, "player1", 10, 1); // misses
 
 // Player2
 var socket = new window.Phoenix.Socket("/socket", {});
@@ -122,8 +122,8 @@ game_channel.on("player_set_islands", (response) => {
   console.log("Player Set Islands", response);
 });
 
-game_channel.on("player_guessed_coordinate", response => { 
-    console.log("Player Guessed Coordinate: ", response.result)
+game_channel.on("player_guessed_coordinate", (response) => {
+  console.log("Player Guessed Coordinate: ", response.result);
 });
 
 add_player(game_channel, "diva");
@@ -139,4 +139,46 @@ set_islands(game_channel, "player2");
 
 // ---- After Player1 guessed
 
-guess_coordinate(game_channel, "player2", 1, 1) // hit and game over
+guess_coordinate(game_channel, "player2", 1, 1); // hit and game over
+
+// ------------ Test Presence
+
+var socket = new window.Phoenix.Socket("/socket", {});
+socket.connect();
+
+function new_channel(player, screen_name) {
+  return socket.channel("game:" + player, { screen_name: screen_name });
+}
+
+function join(channel) {
+  channel
+    .join()
+    .receive("ok", (response) => {
+      console.log("Joined successfully!", response);
+    })
+    .receive("error", (response) => {
+      console.log("Unable to join", response);
+    });
+}
+
+// ------------ Player 1
+var game_channel = new_channel("moon", "moon");
+
+game_channel.on("subscribers", (response) => {
+  console.log("These players have joined: ", response);
+});
+
+// ------------ Player 2
+var game_channel = new_channel("moon", "diva");
+
+game_channel.on("subscribers", (response) => {
+  console.log("These players have joined: ", response);
+});
+
+// ------------ Player 1
+join(game_channel)
+game_channel.push("show_subscribers")
+
+// ------------ Player 2
+join(game_channel)
+game_channel.push("show_subscribers")

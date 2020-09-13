@@ -11,6 +11,8 @@ defmodule IslandsInterface.Application do
       IslandsInterfaceWeb.Telemetry,
       # Start the PubSub system
       {Phoenix.PubSub, name: IslandsInterface.PubSub},
+      # Start Presence module
+      IslandsInterfaceWeb.Presence,
       # Start the Endpoint (http/https)
       IslandsInterfaceWeb.Endpoint
       # Start a worker by calling: IslandsInterface.Worker.start_link(arg)
