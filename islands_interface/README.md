@@ -49,8 +49,10 @@ mix deps.tree
 ## Questions:
 
 ### <>
+def join("game:" <> _player, _payload, socket) do
 
-def join("game:" <> \_player, \_payload, socket) do
+### inspect
+{:reply, {:error, %{reason: inspect(reason)}}, socket}
 
 ## Errata
 
