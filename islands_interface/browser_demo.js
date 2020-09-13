@@ -97,14 +97,16 @@ new_game(game_channel)
 
 // --- After Player2 set_islands
 
-iex> state_data = :sys.get_state(via)
+position_island(game_channel, "player1", "dot", 1, 1);
 
-iex> state_data = :sys.replace_state(via, fn state_data ->
-%{state_data | rules: %Rules{state: :player1_turn}}
-end)
+// iex> via = IslandsEngine.Game.via_tuple("moon")
+// iex> state_data = :sys.get_state(via)
+
+// iex> state_data = :sys.replace_state(via, fn state_data ->
+// %{state_data | rules: %IslandsEngine.Rules{state: :player1_turn}}
+// end)
 
 guess_coordinate(game_channel, "player1", 10, 1) // misses
-
 
 // Player2
 var socket = new window.Phoenix.Socket("/socket", {});
@@ -126,11 +128,12 @@ game_channel.on("player_guessed_coordinate", response => {
 
 add_player(game_channel, "diva");
 
-position_island(game_channel, "player2", "atoll", 1, 1);
+// position_island(game_channel, "player2", "atoll", 1, 1); // TODO position atoll first fails with exception :atoll not found
 position_island(game_channel, "player2", "dot", 1, 5);
 position_island(game_channel, "player2", "l_shape", 1, 7);
 position_island(game_channel, "player2", "s_shape", 5, 1);
 position_island(game_channel, "player2", "square", 5, 5);
+position_island(game_channel, "player2", "atoll", 1, 1);
 
 set_islands(game_channel, "player2");
 

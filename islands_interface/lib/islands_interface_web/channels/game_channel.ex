@@ -52,8 +52,7 @@ defmodule IslandsInterfaceWeb.GameChannel do
     case Game.set_islands(via(socket.topic), player) do
       {:ok, board} ->
         broadcast!(socket, "player_set_islands", %{player: player})
-        # {:reply, {:ok, %{board: board}}, socket} // TODO serialize Board
-        {:reply, {:ok, %{board: "board"}}, socket}
+        {:reply, {:ok, %{board: board}}, socket}
 
       _ ->
         {:reply, :error, socket}

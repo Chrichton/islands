@@ -62,6 +62,15 @@ state_data = :sys.replace_state(game,
                 fn state_data -> %{state_data | rules: %Rules{state: :player1_turn}}
               end)
 
+Elixir uses Jason for serializing.
+https://hexdocs.pm/jason/readme.html
+
+When the book was written, it used Poison.
+It included a serializer for MapSet and you didn't have to mark the structs, that should be serialized.
+I had to mark Coordinate and Island and supply jason.encoder_mapset.ex
+to be able to serialize the Board in game_channel.ex::handle_in("set_islands").
+
+
 ### elixir language
 %IslandsEngine.Coordinate{col: 5, row: 2}
 this is like: new Coordinate{col = 5, row = 2} in C#
