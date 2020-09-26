@@ -50,9 +50,12 @@ mix deps.tree
 
 ### <>
 def join("game:" <> _player, _payload, socket) do
+Answer: <> is the concat String operator
 
 ### inspect
 {:reply, {:error, %{reason: inspect(reason)}}, socket}
+Answer: inspect converts the reason-structure into a string-representation.
+        This way, it hasn´t to be serialized
 
 ## Errata
 
