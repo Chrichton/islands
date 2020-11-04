@@ -121,6 +121,10 @@ The keys (atoms) are the members of the Struct
 Example Coordinate: defstruct [:row, :col]
 Syntactic sugar: coordinate.row accesses :row key
 
+#### "Copy Constructor"
+robot = %RobotSimulator{direction: direction, position: position}
+%RobotSimulator{robot | direction: :west}
+
 ### MapSet = Set in Swift
 
 ### Good read
